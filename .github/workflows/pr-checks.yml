@@ -8,6 +8,9 @@ jobs:
   pr-metadata:
     name: PR Metadata Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     
     steps:
     - name: Checkout code
@@ -43,6 +46,8 @@ jobs:
   lint-commits:
     name: Lint Commit Messages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
@@ -58,6 +63,8 @@ jobs:
   changed-files:
     name: Check Changed Files
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
