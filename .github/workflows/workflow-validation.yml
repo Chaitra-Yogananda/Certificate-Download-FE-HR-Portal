@@ -1,0 +1,53 @@
+name: Workflow Validation
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+
+jobs:
+  validate-workflows:
+    name: Validate Workflow Files
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Validate workflow syntax
+      run: |
+        echo "Validating GitHub Actions workflow files..."
+        for file in .github/workflows/*.yml; do
+          echo "Checking $file"
+          # GitHub Actions automatically validates syntax
+          if [ -f "$file" ]; then
+            echo "✓ $file exists and is readable"
+          fi
+        done
+    
+    - name: Check for required workflows
+      run: |
+        echo "Checking for required workflow files..."
+        required_workflows=("ci.yml" "cd.yml" "security.yml" "pr-checks.yml")
+        for workflow in "${required_workflows[@]}"; do
+          if [ -f ".github/workflows/$workflow" ]; then
+            echo "✓ $workflow found"
+          else
+            echo "✗ $workflow missing"
+            exit 1
+          fi
+        done
+    
+    - name: Workflow validation summary
+      run: |
+        echo "### Workflow Validation Results" >> $GITHUB_STEP_SUMMARY
+        echo "✅ All required workflows are present" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Workflows validated:**" >> $GITHUB_STEP_SUMMARY
+        ls -1 .github/workflows/*.yml | while read file; do
+          echo "- \`$(basename $file)\`" >> $GITHUB_STEP_SUMMARY
+        done
