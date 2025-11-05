@@ -1,14 +1,14 @@
-name: React CI
+name: Deploy React App to Azure Web App
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main  # Change to your deployment branch if required
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,12 +18,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install npm dependencies
+        run: npm ci
 
-      # Uncomment the lines below once you have build & test scripts
-      # - name: Build project
-      #   run: npm run build
+      - name: Build React app
+        run: npm run build
 
-      # - name: Run tests
-      #   run: npm test
+      - name: Deploy to Azure Web App
+        uses: Azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }} # Set this secret if you wish, or hardcode app name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./build
