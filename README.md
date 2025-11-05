@@ -1,6 +1,38 @@
-# Getting Started with Create React App
+# HR Certificate Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![CI](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/ci.yml/badge.svg)](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/ci.yml)
+[![CD](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/cd.yml/badge.svg)](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/cd.yml)
+[![Security Scan](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/security.yml/badge.svg)](https://github.com/Chaitra-Yogananda/Certificate-Download-FE-HR-Portal/actions/workflows/security.yml)
+
+This project is an HR Certificate Download Portal bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## CI/CD Pipeline
+
+This project includes a comprehensive CI/CD pipeline with the following workflows:
+
+### Continuous Integration (CI)
+- **Build and Test**: Runs on push/PR to main and develop branches
+  - Tests on Node.js 18.x and 20.x
+  - Installs dependencies and runs tests
+  - Builds the application
+  - Uploads build artifacts and coverage reports
+  - Code quality checks
+
+### Continuous Deployment (CD)
+- **Staging Deployment**: Automatic deployment to staging on push to main
+- **Production Deployment**: Automatic deployment on version tags (v*.*.*)
+- **Manual Deployment**: Can be triggered manually via workflow dispatch
+
+### Security Scanning
+- **Weekly Security Audits**: Runs every Monday
+- **Dependency Review**: Runs on pull requests
+- **CodeQL Analysis**: Static code analysis for security vulnerabilities
+- **npm Audit**: Checks for vulnerable dependencies
+
+### Pull Request Checks
+- **PR Metadata Validation**: Checks PR title format
+- **Commit Message Linting**: Validates commit messages
+- **Changed Files Tracking**: Lists all changed files
 
 ## Available Scripts
 
